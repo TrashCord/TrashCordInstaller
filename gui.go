@@ -366,7 +366,7 @@ func RawInfoModal(id, title, description, extra string, isOpenAsar bool) g.Widge
 								}).
 								Size(100, 30)
 						},
-					),
+					}, // <--- CORRETTO QUI: ho messo la graffa },
 				),
 		)
 }
