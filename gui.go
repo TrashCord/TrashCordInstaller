@@ -18,7 +18,6 @@ import (
 	g "github.com/AllenDang/giu"
 	"github.com/AllenDang/imgui-go"
 
-	// png decoder for icon
 	_ "image/png"
 	"os"
 	path "path/filepath"
@@ -232,7 +231,6 @@ func (di *DiscordInstall) Unpatch() {
 func onCustomInputChanged() {
 	p := customDir
 	if len(p) != 0 {
-		// Select the custom option for people
 		radioIdx = customChoiceIdx
 	}
 
@@ -243,13 +241,11 @@ func onCustomInputChanged() {
 
 	if isNewDir || wentUpADir {
 		autoCompleteDir = dir
-		// reset all the funnies
 		autoCompleteIdx = 0
 		lastAutoComplete = ""
 		autoCompleteFile = ""
 		autoCompleteCandidates = nil
 
-		// Generate autocomplete items
 		files, err := os.ReadDir(dir)
 		if err == nil {
 			for _, file := range files {
@@ -257,7 +253,6 @@ func onCustomInputChanged() {
 			}
 		}
 	} else if !didAutoComplete {
-		// reset auto complete and update our file
 		autoCompleteFile = path.Base(p)
 		lastAutoComplete = ""
 	}
@@ -269,10 +264,6 @@ func onCustomInputChanged() {
 	didAutoComplete = false
 }
 
-// go can you give me []any?
-// to pass to giu RangeBuilder?
-// yeeeeees
-// actually returns []string like a boss
 func makeAutoComplete() []any {
 	input := strings.ToLower(autoCompleteFile)
 
@@ -337,7 +328,6 @@ func RawInfoModal(id, title, description, extra string, isOpenAsar bool) g.Widge
 						return g.Column(
 							g.Dummy(0, 10),
 							g.Button("Take me there!").OnClick(func() {
-								// this issue only exists on windows so using Windows specific path is oki
 								username := os.Getenv("USERNAME")
 								programData := os.Getenv("PROGRAMDATA")
 								g.OpenURL("file://" + path.Join(programData, username))
@@ -349,7 +339,6 @@ func RawInfoModal(id, title, description, extra string, isOpenAsar bool) g.Widge
 						return g.Column(
 							g.Dummy(0, 10),
 							g.Button("Open Settings").OnClick(func() {
-								// "App Management" permissions doesnt exist on Monterey, just use full disk access for now
 								g.OpenURL("x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles")
 							}).Size(200, 30),
 						)
@@ -533,31 +522,26 @@ func renderInstaller() g.Widget {
 							Size(w-16).
 							Flags(g.InputTextFlagsCallbackCompletion).
 							OnChange(onCustomInputChanged).
-							// this library has its own autocomplete but it's broken
 							Callback(
 								func(data imgui.InputTextCallbackData) int32 {
 									if len(candidates) == 0 {
 										return 0
 									}
-									// just wrap around
 									if autoCompleteIdx >= len(candidates) {
 										autoCompleteIdx = 0
 									}
 
-									// used by change handler
 									didAutoComplete = true
 
 									start := len(customDir)
-									// Delete previous auto complete
 									if lastAutoComplete != "" {
 										start -= len(lastAutoComplete)
 										data.DeleteBytes(start, len(lastAutoComplete))
-									} else if autoCompleteFile != "" { // delete partial input
+									} else if autoCompleteFile != "" {
 										start -= len(autoCompleteFile)
 										data.DeleteBytes(start, len(autoCompleteFile))
 									}
 
-									// Insert auto complete
 									lastAutoComplete = candidates[autoCompleteIdx].(string)
 									data.InsertBytes(start, []byte(lastAutoComplete))
 									autoCompleteIdx++
