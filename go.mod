@@ -1,4 +1,4 @@
-module equilotl
+module github.com/TrashCord/TrashCordInstaller
 
 go 1.26.2
 

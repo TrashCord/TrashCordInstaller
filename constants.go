@@ -7,18 +7,18 @@
 package main
 
 import (
-	"equilotl/buildinfo"
+	"github.com/TrashCord/TrashCordInstaller/buildinfo"
 	"image/color"
 )
 
-const ReleaseUrl = "https://api.github.com/repos/Equicord/Equicord/releases/latest"
-const ReleaseUrlFallback = "https://equicord.org/releases/equicord"
-const InstallerReleaseUrl = "https://api.github.com/repos/Equicord/Equilotl/releases/latest"
-const InstallerReleaseUrlFallback = "https://equicord.org/releases/equilotl"
+const ReleaseUrl = "https://api.github.com/repos/TrashCord/TrashCord/releases/latest"
+const ReleaseUrlFallback = ""
+const InstallerReleaseUrl = "https://api.github.com/repos/TrashCord/TrashCordInstaller/releases/latest"
+const InstallerReleaseUrlFallback = ""
 
-var UserAgent = "Equilotl/" + buildinfo.InstallerGitHash + " (https://github.com/Equicord/Equilotl)"
+var UserAgent = "TrashCordInstaller/" + buildinfo.InstallerGitHash + " (https://github.com/TrashCord/TrashCordInstaller)"
 
-const SupportUrl = "https://equicord.org/discord"
+const SupportUrl = "https://github.com/TrashCord/TrashCordInstaller/issues"
 
 var (
 	DiscordGreen        = color.RGBA{0, 133, 69, 0xff}
