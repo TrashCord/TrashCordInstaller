@@ -166,6 +166,7 @@ func (di *DiscordInstall) patch() error {
 
 		var err error
 		if !isSystemFlatpak && os.Getuid() == 0 {
+			// We are operating on a user flatpak but are root
 			actualUser := os.Getenv("SUDO_USER")
 			Log.Debug("This is a user install but we are root. Using su to run as", actualUser)
 			cmd := exec.Command("su", "-", actualUser, "-c", "sh", "-c", fullCmd)
@@ -207,7 +208,7 @@ func isEquicordLoaderAppAsar(appAsar string) (bool, error) {
 func cleanupDesyncedPatchedInstall(dir string, isSystemElectron bool) (bool, error) {
 	appAsar := path.Join(dir, "app.asar")
 	_appAsar := path.Join(dir, "_app.asar")
-	appAsarBackup := path.Join(dir, "app.asar.backup") // Aggiunto per pulire i backup
+	appAsarBackup := path.Join(dir, "app.asar.backup")
 
 	isLoader, err := isEquicordLoaderAppAsar(appAsar)
 	if err != nil {
@@ -219,12 +220,10 @@ func cleanupDesyncedPatchedInstall(dir string, isSystemElectron bool) (bool, err
 
 	Log.Warn("Detected a patched install with a non-TrashCord app.asar. Discord was likely updated while patched; removing stale _app.asar")
 
-	// FIX: os.RemoveAll elimina sia file che intere cartelle, risolvendo l'errore "La directory non è vuota"
 	if err = os.RemoveAll(_appAsar); err != nil {
 		return false, CheckIfErrIsCauseItsBusyRn(err)
 	}
 	
-	// FIX: Rimuove anche il fastidioso file di backup che blocca l'installazione
 	if err = os.RemoveAll(appAsarBackup); err != nil {
 		return false, CheckIfErrIsCauseItsBusyRn(err)
 	}
