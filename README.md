@@ -2,7 +2,7 @@
 
 The TrashCord Installer allows you to install [TrashCord, the underground Discord Desktop client mod](https://github.com/TrashCord/TrashCord)
 
-![image](https://i.imgur.com/oHN41ss.png)
+![image](https://github.com/TrashCord/main/blob/main/host/images/TrashCordInstaller-View.png?raw=true)
 
 ## Usage
 
