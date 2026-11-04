@@ -193,14 +193,14 @@ func (di *DiscordInstall) patch() error {
 func isEquicordLoaderAppAsar(appAsar string) (bool, error) {
 	stat, err := os.Stat(appAsar)
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	if stat.Size() > 128*1024 {
 		return false, nil
 	}
 	b, err := os.ReadFile(appAsar)
 	if err != nil {
-		return false, err
+		return false, nil
 	}
 	return bytes.Contains(b, []byte(PackageJson)) && bytes.Contains(b, []byte("require(")), nil
 }

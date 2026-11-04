@@ -498,7 +498,7 @@ func renderInstaller() g.Widget {
 				}
 
 				if d.isPatched {
-					text += " (TrashCord Installed)"
+					text += " [PATCHED]"
 				}
 
 				return g.Row(
