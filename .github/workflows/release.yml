@@ -434,6 +434,6 @@ jobs:
             --title "${{ github.ref_name }}" \
             --notes "This is release ${{ github.ref_name }} of TrashCordInstaller." \
             --generate-notes \
-            linux/* macos/* windows/*.exe
+            linux/* windows/*.exe macos/*.dmg macos/*Cli*
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
